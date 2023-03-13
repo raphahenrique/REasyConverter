@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "coordinator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/raphahenrique/coordinator.git",
+      "state" : {
+        "branch" : "feat/routable",
+        "revision" : "a14bd3d923348e48960e2cc41110bc0c0bde8f54"
+      }
+    }
+  ],
+  "version" : 2
+}
