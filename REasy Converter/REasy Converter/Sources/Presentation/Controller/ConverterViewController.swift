@@ -27,28 +27,42 @@ class ConverterViewController: UIViewController {
 
     var theView: ConverterView!
 
+    var viewModel: ConverterViewModelProtocol? {
+        didSet {
+            theView.viewModel = viewModel
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        viewModel = ConverterViewModel()
 
     }
 
     override func loadView() {
-        theView = ConverterView(delegate: self)
+        theView = ConverterView()
+        theView.delegate = self
         view = theView
     }
 
 }
 
-extension ConverterViewController: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = textField.text else { return true }
-        if textField.tag == 0 {
-            theView.viewModel = ConverterViewModel(firstValue: text, secondValue: "")
-        } else if textField.tag == 1 {
-            theView.viewModel = ConverterViewModel(firstValue: "", secondValue: text)
-        }
-        return true
-    }
+extension ConverterViewController: ConverterViewDelegate {
 
+    func didSetFirstCountry(valueDouble: Double?) {
+        guard let newValue = valueDouble else { return }
+        print("chegou na VC \(newValue)")
+        viewModel?.setFirstToSecondValues(value: newValue)
+//        viewModel?.secondSelectedCurrency = Currency(locale: "pt_BR", amount: newValue * 2)
+    }
+    
+    func didSetSecondCountry(valueDouble: Double?) {
+        guard let newValue = valueDouble else { return }
+        print("chegou na VC2 \(newValue)")
+        viewModel?.setSecondToFirstValues(value: newValue)
+//        viewModel?.firstSelectedCurrency = Currency(locale: "es_CL", amount: newValue / 2)
+    }
+    
+    
 }

@@ -7,12 +7,17 @@
 
 import UIKit
 
+protocol ConverterViewDelegate: AnyObject {
+    func didSetFirstCountry(valueDouble: Double?)
+    func didSetSecondCountry(valueDouble: Double?)
+}
+
 class ConverterView: UIView {
 
     private let firstCountryImageView: UIImageView
-    private let firstCountryTextField: UITextField
+    private let firstCountryTextField: CurrencyTextField
     private let secondCountryImageView: UIImageView
-    private let secondCountryTextField: UITextField
+    private let secondCountryTextField: CurrencyTextField
     
     var viewModel: ConverterViewModelProtocol? {
         didSet {
@@ -20,14 +25,13 @@ class ConverterView: UIView {
         }
     }
     
-    init(delegate: UITextFieldDelegate) {
-        firstCountryImageView = UIImageView()
-        firstCountryTextField = UITextField()
-        secondCountryImageView = UIImageView()
-        secondCountryTextField = UITextField()
+    weak var delegate: ConverterViewDelegate?
 
-        firstCountryTextField.delegate = delegate
-        secondCountryTextField.delegate = delegate
+    init() {
+        firstCountryImageView = UIImageView()
+        firstCountryTextField = CurrencyTextField()
+        secondCountryImageView = UIImageView()
+        secondCountryTextField = CurrencyTextField()
 
         super.init(frame: .zero)
         setupView()
@@ -41,13 +45,11 @@ class ConverterView: UIView {
         guard let model = viewModel else {
             return
         }
-        if !model.firstValue.isEmpty {
-            firstCountryTextField.text = model.firstValue
-        }
-        if model.secondValue.isEmpty, let doubleValue = Double(model.firstValue) {
-            let convertedValue = doubleValue * model.rate
-            secondCountryTextField.text = String(convertedValue)
-        }
+        firstCountryTextField.text?.removeAll()
+        firstCountryTextField.currency = model.firstSelectedCurrency
+
+        secondCountryTextField.text?.removeAll()
+        secondCountryTextField.currency = model.secondSelectedCurrency
         
     }
 }
@@ -72,16 +74,30 @@ extension ConverterView: ViewCodable {
         firstCountryTextField.text = "5000"
         firstCountryTextField.borderStyle = .roundedRect
         firstCountryTextField.translatesAutoresizingMaskIntoConstraints = false
-        firstCountryTextField.font = UIFont.systemFont(ofSize: 22, weight: .medium)
+        firstCountryTextField.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         firstCountryTextField.keyboardType = .numberPad
         firstCountryTextField.tag = 0
                 
         secondCountryTextField.text = "30"
         secondCountryTextField.borderStyle = .roundedRect
         secondCountryTextField.translatesAutoresizingMaskIntoConstraints = false
-        secondCountryTextField.font = UIFont.systemFont(ofSize: 22, weight: .medium)
+        secondCountryTextField.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         secondCountryTextField.keyboardType = .numberPad
         secondCountryTextField.tag = 1
+        
+        
+        
+        firstCountryTextField.retrieveTextFieldValues = { [weak self] stringAmount, doubleAmount in
+            print(stringAmount)
+            print(doubleAmount)
+            self?.delegate?.didSetFirstCountry(valueDouble: doubleAmount)
+        }
+        secondCountryTextField.retrieveTextFieldValues = { [weak self] stringAmount, doubleAmount in
+            print(stringAmount)
+            print(doubleAmount)
+            self?.delegate?.didSetSecondCountry(valueDouble: doubleAmount)
+        }
+        
     }
 
     func buildHierarchy() {
