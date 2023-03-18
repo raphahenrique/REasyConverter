@@ -18,6 +18,7 @@ class ConverterView: UIView {
     private let firstCountryTextField: CurrencyTextField
     private let secondCountryImageView: UIImageView
     private let secondCountryTextField: CurrencyTextField
+    private let hintLabel: UILabel
     
     var viewModel: ConverterViewModelProtocol? {
         didSet {
@@ -32,6 +33,7 @@ class ConverterView: UIView {
         firstCountryTextField = CurrencyTextField()
         secondCountryImageView = UIImageView()
         secondCountryTextField = CurrencyTextField()
+        hintLabel = UILabel()
 
         super.init(frame: .zero)
         setupView()
@@ -51,6 +53,7 @@ class ConverterView: UIView {
         secondCountryTextField.text?.removeAll()
         secondCountryTextField.currency = model.secondSelectedCurrency
         
+        hintLabel.text = model.hint
     }
 }
 
@@ -85,16 +88,14 @@ extension ConverterView: ViewCodable {
         secondCountryTextField.keyboardType = .numberPad
         secondCountryTextField.tag = 1
         
-        
+        hintLabel.translatesAutoresizingMaskIntoConstraints = false
+        hintLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        hintLabel.textColor = .lightGray
         
         firstCountryTextField.retrieveTextFieldValues = { [weak self] stringAmount, doubleAmount in
-            print(stringAmount)
-            print(doubleAmount)
             self?.delegate?.didSetFirstCountry(valueDouble: doubleAmount)
         }
         secondCountryTextField.retrieveTextFieldValues = { [weak self] stringAmount, doubleAmount in
-            print(stringAmount)
-            print(doubleAmount)
             self?.delegate?.didSetSecondCountry(valueDouble: doubleAmount)
         }
         
@@ -105,7 +106,8 @@ extension ConverterView: ViewCodable {
             firstCountryImageView,
             firstCountryTextField,
             secondCountryImageView,
-            secondCountryTextField
+            secondCountryTextField,
+            hintLabel
         )
     }
 
@@ -114,7 +116,7 @@ extension ConverterView: ViewCodable {
         NSLayoutConstraint.activate([
                         
             firstCountryImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 32),
-            firstCountryImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            firstCountryImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             firstCountryImageView.widthAnchor.constraint(equalToConstant: 48),
             firstCountryImageView.heightAnchor.constraint(equalToConstant: 48),
             
@@ -123,14 +125,18 @@ extension ConverterView: ViewCodable {
             firstCountryTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
             secondCountryImageView.topAnchor.constraint(equalTo: firstCountryTextField.bottomAnchor, constant: 32),
-            secondCountryImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            secondCountryImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             secondCountryImageView.widthAnchor.constraint(equalToConstant: 48),
             secondCountryImageView.heightAnchor.constraint(equalToConstant: 48),
             
             secondCountryTextField.topAnchor.constraint(equalTo: secondCountryImageView.bottomAnchor, constant: 24),
             secondCountryTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            secondCountryTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24)
+            secondCountryTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
              
+            hintLabel.topAnchor.constraint(equalTo: secondCountryTextField.bottomAnchor, constant: 42),
+            hintLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            hintLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            
         ])
         
     }

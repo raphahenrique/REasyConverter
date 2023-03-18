@@ -17,7 +17,7 @@ class CurrencyTextField: UITextField {
             guard let currency = currency else { return }
             numberFormatter.currencyCode = currency.code
             numberFormatter.locale = Locale(identifier: currency.locale)
-            // Code added
+
             startingValue = currency.amount
         }
     }

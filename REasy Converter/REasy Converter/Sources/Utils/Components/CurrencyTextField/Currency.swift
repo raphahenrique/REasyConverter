@@ -9,7 +9,7 @@ import Foundation
 
 struct Currency {
 
-    let locale: String
+    var locale: String
     
     var amount: Double
     

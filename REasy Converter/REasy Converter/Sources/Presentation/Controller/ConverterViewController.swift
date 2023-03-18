@@ -35,9 +35,9 @@ class ConverterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideKeyboardWhenTappedAround()
 
         viewModel = ConverterViewModel()
-
     }
 
     override func loadView() {
@@ -52,17 +52,12 @@ extension ConverterViewController: ConverterViewDelegate {
 
     func didSetFirstCountry(valueDouble: Double?) {
         guard let newValue = valueDouble else { return }
-        print("chegou na VC \(newValue)")
         viewModel?.setFirstToSecondValues(value: newValue)
-//        viewModel?.secondSelectedCurrency = Currency(locale: "pt_BR", amount: newValue * 2)
     }
     
     func didSetSecondCountry(valueDouble: Double?) {
         guard let newValue = valueDouble else { return }
-        print("chegou na VC2 \(newValue)")
         viewModel?.setSecondToFirstValues(value: newValue)
-//        viewModel?.firstSelectedCurrency = Currency(locale: "es_CL", amount: newValue / 2)
     }
-    
     
 }
