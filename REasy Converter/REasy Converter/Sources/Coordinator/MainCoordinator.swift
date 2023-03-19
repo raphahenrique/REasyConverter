@@ -34,7 +34,7 @@ class MainCoordinator: Coordinator {
                                               tag: 0)
         // arrow.up.right.and.arrow.down.left.rectangle.fill dollarsign.circle.fill
         
-        let settingsVC = UIViewController()
+        let settingsVC = SettingsViewController()
         settingsVC.title = "Configurações"
         settingsVC.view.backgroundColor = .white
         settingsVC.tabBarItem = UITabBarItem(title: "Configurações",

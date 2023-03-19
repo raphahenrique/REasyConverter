@@ -91,6 +91,7 @@ extension ConverterView: ViewCodable {
         hintLabel.translatesAutoresizingMaskIntoConstraints = false
         hintLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
         hintLabel.textColor = .lightGray
+        hintLabel.numberOfLines = 0
         
         firstCountryTextField.retrieveTextFieldValues = { [weak self] stringAmount, doubleAmount in
             self?.delegate?.didSetFirstCountry(valueDouble: doubleAmount)

@@ -37,7 +37,11 @@ class ConverterViewController: UIViewController {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
 
-        viewModel = ConverterViewModel()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadData()
     }
 
     override func loadView() {
@@ -46,6 +50,10 @@ class ConverterViewController: UIViewController {
         view = theView
     }
 
+    private func loadData() {
+        let rate = UserDefaults.standard.double(forKey: "RATE")
+        viewModel = ConverterViewModel(rate: rate)
+    }
 }
 
 extension ConverterViewController: ConverterViewDelegate {

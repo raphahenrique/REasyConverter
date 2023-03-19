@@ -19,15 +19,24 @@ protocol ConverterViewModelProtocol {
 struct ConverterViewModel: ConverterViewModelProtocol {
     
     var hint: String
-    var rate: Double
+    var rate: Double {
+        didSet {
+            
+        }
+    }
     var firstSelectedCurrency: Currency?
     var secondSelectedCurrency: Currency?
     
-    init(rate: Double = 0.00636) {
-        self.hint = "* taxa utilizada: (CLP)1000.0 -> (BRL)6.36"
+    init(rate: Double = 0.00639) {
+        if rate == 0 {
+            self.rate = 0.00639
+        } else {
+            self.rate = rate
+        }
+        self.hint = "taxa utilizada: (CLP)1000.0 -> (BRL)6.39\nou: (BRL)1.0 -> (CLP)156"
         self.firstSelectedCurrency = Currency(locale: "es_CL", amount: 1000.0)
-        self.secondSelectedCurrency = Currency(locale: "pt_BR", amount: 1000 * rate)
-        self.rate = rate
+        self.secondSelectedCurrency = Currency(locale: "pt_BR", amount: 1000 * self.rate)
+//        self.rate = rate
     }
     
     mutating func setFirstToSecondValues(value: Double) {
