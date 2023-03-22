@@ -14,6 +14,7 @@
 		6439765729BEA6780031C260 /* REasy_ConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6439765629BEA6780031C260 /* REasy_ConverterTests.swift */; };
 		6439766129BEA6780031C260 /* REasy_ConverterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6439766029BEA6780031C260 /* REasy_ConverterUITests.swift */; };
 		6439766329BEA6780031C260 /* REasy_ConverterUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6439766229BEA6780031C260 /* REasy_ConverterUITestsLaunchTests.swift */; };
+		648EE2B229CA93A10083E8F3 /* NetworkTasks in Frameworks */ = {isa = PBXBuildFile; productRef = 648EE2B129CA93A10083E8F3 /* NetworkTasks */; };
 		64AD24DF29BEC49B00A19708 /* RCoordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD24DE29BEC49B00A19708 /* RCoordinator */; };
 		64AD24E429BEC52A00A19708 /* ViewCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AD24E329BEC52A00A19708 /* ViewCodable.swift */; };
 		64AD24E729BEC58F00A19708 /* ConverterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AD24E629BEC58F00A19708 /* ConverterViewController.swift */; };
@@ -83,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				648EE2B229CA93A10083E8F3 /* NetworkTasks in Frameworks */,
 				64AD24DF29BEC49B00A19708 /* RCoordinator in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,6 +269,7 @@
 			name = "REasy Converter";
 			packageProductDependencies = (
 				64AD24DE29BEC49B00A19708 /* RCoordinator */,
+				648EE2B129CA93A10083E8F3 /* NetworkTasks */,
 			);
 			productName = "REasy Converter";
 			productReference = 6439763C29BEA6730031C260 /* REasy Converter.app */;
@@ -342,6 +345,7 @@
 			mainGroup = 6439763329BEA6730031C260;
 			packageReferences = (
 				64AD24DD29BEC49B00A19708 /* XCRemoteSwiftPackageReference "coordinator" */,
+				648EE2B029CA93A10083E8F3 /* XCRemoteSwiftPackageReference "NetworkTasks" */,
 			);
 			productRefGroup = 6439763D29BEA6730031C260 /* Products */;
 			projectDirPath = "";
@@ -741,6 +745,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		648EE2B029CA93A10083E8F3 /* XCRemoteSwiftPackageReference "NetworkTasks" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/raphahenrique/NetworkTasks.git";
+			requirement = {
+				branch = feat/sdk;
+				kind = branch;
+			};
+		};
 		64AD24DD29BEC49B00A19708 /* XCRemoteSwiftPackageReference "coordinator" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/raphahenrique/coordinator.git";
@@ -752,6 +764,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		648EE2B129CA93A10083E8F3 /* NetworkTasks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 648EE2B029CA93A10083E8F3 /* XCRemoteSwiftPackageReference "NetworkTasks" */;
+			productName = NetworkTasks;
+		};
 		64AD24DE29BEC49B00A19708 /* RCoordinator */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 64AD24DD29BEC49B00A19708 /* XCRemoteSwiftPackageReference "coordinator" */;

@@ -8,6 +8,15 @@
         "branch" : "feat/routable",
         "revision" : "a14bd3d923348e48960e2cc41110bc0c0bde8f54"
       }
+    },
+    {
+      "identity" : "networktasks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/raphahenrique/NetworkTasks.git",
+      "state" : {
+        "branch" : "feat/sdk",
+        "revision" : "15b0da6d21f583ddf1420bbd3b2cd31879d1bce1"
+      }
     }
   ],
   "version" : 2
