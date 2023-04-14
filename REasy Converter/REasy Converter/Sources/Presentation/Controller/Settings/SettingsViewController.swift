@@ -31,13 +31,15 @@ class SettingsViewController: UIViewController {
     
     override func loadView() {
         theView = SettingsView(textFieldDelegate: self)
+        theView.delegate = self
         view = theView
     }
 
     private func loadData() {
         let rate = UserDefaults.standard.double(forKey: "RATE")
+        let inverted = UserDefaults.standard.bool(forKey: "INVERT_RATE")
         
-        viewModel = SettingsViewModel(currentRate: rate.isZero ? "0.00639" : String(rate))
+        viewModel = SettingsViewModel(currentRate: rate.isZero ? "0.00639" : String(rate), isInverted: inverted)
         
     }
 }
@@ -45,12 +47,29 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
+
         var text = textField.text ?? String()
         text = text.replace(this: ",", with: ".")
         if !text.isEmpty, let newValue = Double(text) {
-            UserDefaults.standard.set(newValue, forKey: "RATE")
+            saveRate(rate: newValue)
         }
     }
 
+    private func saveRate(rate: Double) {
+        UserDefaults.standard.set(rate, forKey: "RATE")
+    }
+
+}
+
+extension SettingsViewController: SettingsViewDelegate {
+
+    func didPressInvert(value: Double) {
+        guard let inverted = viewModel?.isInverted else { return }
+        let rate = UserDefaults.standard.double(forKey: "RATE")
+        let currentRate = (1/rate)
+        viewModel = SettingsViewModel(currentRate: String(currentRate), isInverted: !inverted)
+        UserDefaults.standard.set(!inverted, forKey: "INVERT_RATE")
+        UserDefaults.standard.set(currentRate, forKey: "RATE")
+    }
+    
 }
