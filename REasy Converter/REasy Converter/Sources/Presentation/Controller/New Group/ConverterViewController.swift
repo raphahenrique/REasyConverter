@@ -52,7 +52,8 @@ class ConverterViewController: UIViewController {
 
     private func loadData() {
         let rate = UserDefaults.standard.double(forKey: "RATE")
-        viewModel = ConverterViewModel(rate: rate)
+        let inverted = UserDefaults.standard.bool(forKey: "INVERT_RATE")
+        viewModel = ConverterViewModel(rate: rate, isInverted: inverted)
     }
 }
 

@@ -14,29 +14,34 @@ protocol ConverterViewModelProtocol {
     var secondSelectedCurrency: Currency? { get set }
     mutating func setFirstToSecondValues(value: Double)
     mutating func setSecondToFirstValues(value: Double)
+    var isInverted: Bool { get }
 }
 
 struct ConverterViewModel: ConverterViewModelProtocol {
     
     var hint: String
-    var rate: Double {
-        didSet {
-            
-        }
-    }
+    var rate: Double
     var firstSelectedCurrency: Currency?
     var secondSelectedCurrency: Currency?
+    var isInverted: Bool
     
-    init(rate: Double = 0.00639) {
-        if rate == 0 {
-            self.rate = 0.00639
+    init(rate: Double = 0.00639, isInverted: Bool = false) {
+        let newRate = isInverted ? (1/rate) : rate
+        if newRate == 0 {
+            self.rate = isInverted ? (1/0.00639) : 0.00639
         } else {
-            self.rate = rate
+            self.rate = newRate
         }
-        self.hint = "taxa utilizada: (CLP)1000.0 -> (BRL)6.39\nou: (BRL)1.0 -> (CLP)156"
-        self.firstSelectedCurrency = Currency(locale: "es_CL", amount: 1000.0)
-        self.secondSelectedCurrency = Currency(locale: "pt_BR", amount: 1000 * self.rate)
-//        self.rate = rate
+        let initialTopAmount = Double(1000.0)
+        let initialSecondAmount = initialTopAmount * self.rate
+        
+        let secondAmount1st = Double(1.0)
+        let firstAmount2nd = String(format: "%.2f", secondAmount1st / self.rate)
+
+        self.firstSelectedCurrency = Currency(locale: "es_CL", amount: initialTopAmount)
+        self.secondSelectedCurrency = Currency(locale: "pt_BR", amount: initialSecondAmount)
+        self.hint = "taxa utilizada: (CLP)\(initialTopAmount) -> (BRL)\(initialSecondAmount)\nou: (BRL)\(secondAmount1st) -> (CLP)\(firstAmount2nd)"
+        self.isInverted = isInverted
     }
     
     mutating func setFirstToSecondValues(value: Double) {
@@ -49,7 +54,4 @@ struct ConverterViewModel: ConverterViewModelProtocol {
         firstSelectedCurrency?.amount = value * (1/rate)
     }
 
-    private func calculate(a: Double, b: Double) -> Double {
-        return 0.0
-    }
 }
