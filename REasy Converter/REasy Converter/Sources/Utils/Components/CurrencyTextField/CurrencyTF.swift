@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Currency {
+struct CurrencyTF {
 
     var locale: String
     

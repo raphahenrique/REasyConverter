@@ -9,13 +9,15 @@ import UIKit
 
 protocol SettingsViewDelegate: AnyObject {
     func didPressInvert(value: Double)
+    func didPressSync()
 }
 
 class SettingsView: UIView {
-
+    
     private let rateLabel: UILabel
     private let rateTextField: UITextField
     private let invertButton: UIButton
+    private let syncButton: UIButton
     
     var viewModel: SettingsViewModelProtocol? {
         didSet {
@@ -24,11 +26,12 @@ class SettingsView: UIView {
     }
     
     weak var delegate: SettingsViewDelegate?
-
+    
     init(textFieldDelegate: UITextFieldDelegate) {
         rateLabel = UILabel()
         rateTextField = UITextField()
         invertButton = UIButton(type: .system)
+        syncButton = UIButton(type: .system)
         
         rateTextField.delegate = textFieldDelegate
         super.init(frame: .zero)
@@ -51,11 +54,16 @@ class SettingsView: UIView {
             invertButton.setTitleColor(.green, for: .normal)
         }
         invertButton.setTitle(model.invertButton, for: .normal)
+        syncButton.setTitle("download data", for: .normal)
     }
-
+    
     @objc private func invertButtonTapped() {
         let value = rateTextField.text ?? "0.0"
         delegate?.didPressInvert(value: Double(value) ?? 0.0)
+    }
+
+    @objc private func syncButtonTapped() {
+        delegate?.didPressSync()
     }
 }
 
@@ -75,13 +83,17 @@ extension SettingsView: ViewCodable {
         
         invertButton.translatesAutoresizingMaskIntoConstraints = false
         invertButton.addTarget(self, action: #selector(invertButtonTapped), for: .touchUpInside)
+
+        syncButton.translatesAutoresizingMaskIntoConstraints = false
+        syncButton.addTarget(self, action: #selector(syncButtonTapped), for: .touchUpInside)
     }
 
     func buildHierarchy() {
         addViews(
             rateLabel,
             rateTextField,
-            invertButton
+            invertButton,
+            syncButton
         )
     }
 
@@ -98,7 +110,9 @@ extension SettingsView: ViewCodable {
             
             invertButton.topAnchor.constraint(equalTo: rateTextField.bottomAnchor, constant: 8),
             invertButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            
+
+            syncButton.topAnchor.constraint(equalTo: invertButton.bottomAnchor, constant: 32),
+            syncButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
         ])
         
     }
@@ -107,6 +121,4 @@ extension SettingsView: ViewCodable {
         
     }
 
-    
 }
-

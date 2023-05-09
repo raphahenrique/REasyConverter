@@ -12,7 +12,7 @@ class CurrencyTextField: UITextField {
     var retrieveTextFieldValues: ((String, Double?) -> Void)?
     private var amountAsDouble: Double?
 
-    var currency: Currency? {
+    var currency: CurrencyTF? {
         didSet {
             guard let currency = currency else { return }
             numberFormatter.currencyCode = currency.code

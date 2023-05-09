@@ -62,7 +62,7 @@ extension SettingsViewController: UITextFieldDelegate {
 }
 
 extension SettingsViewController: SettingsViewDelegate {
-
+    
     func didPressInvert(value: Double) {
         guard let inverted = viewModel?.isInverted else { return }
         let rate = UserDefaults.standard.double(forKey: "RATE")
@@ -72,4 +72,17 @@ extension SettingsViewController: SettingsViewDelegate {
         UserDefaults.standard.set(currentRate, forKey: "RATE")
     }
     
+    func didPressSync() {
+        let service = MainService()
+        service.fetchCurrencies { result in
+            switch result {
+            case .success(let currencies):
+                print(">>>>>>")
+                print(currencies)
+            case .failure(let erro):
+                print(erro)
+            }
+        }
+    }
+
 }

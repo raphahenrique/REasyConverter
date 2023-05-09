@@ -10,8 +10,8 @@ import Foundation
 protocol ConverterViewModelProtocol {
     var hint: String { get }
     var rate: Double { get set }
-    var firstSelectedCurrency: Currency? { get set }
-    var secondSelectedCurrency: Currency? { get set }
+    var firstSelectedCurrency: CurrencyTF? { get set }
+    var secondSelectedCurrency: CurrencyTF? { get set }
     mutating func setFirstToSecondValues(value: Double)
     mutating func setSecondToFirstValues(value: Double)
     var isInverted: Bool { get }
@@ -21,8 +21,8 @@ struct ConverterViewModel: ConverterViewModelProtocol {
     
     var hint: String
     var rate: Double
-    var firstSelectedCurrency: Currency?
-    var secondSelectedCurrency: Currency?
+    var firstSelectedCurrency: CurrencyTF?
+    var secondSelectedCurrency: CurrencyTF?
     var isInverted: Bool
     
     init(rate: Double = 0.00639, isInverted: Bool = false) {
@@ -38,8 +38,8 @@ struct ConverterViewModel: ConverterViewModelProtocol {
         let secondAmount1st = Double(1.0)
         let firstAmount2nd = String(format: "%.2f", secondAmount1st / self.rate)
 
-        self.firstSelectedCurrency = Currency(locale: "es_CL", amount: initialTopAmount)
-        self.secondSelectedCurrency = Currency(locale: "pt_BR", amount: initialSecondAmount)
+        self.firstSelectedCurrency = CurrencyTF(locale: "es_CL", amount: initialTopAmount)
+        self.secondSelectedCurrency = CurrencyTF(locale: "pt_BR", amount: initialSecondAmount)
         self.hint = "taxa utilizada: (CLP)\(initialTopAmount) -> (BRL)\(initialSecondAmount)\nou: (BRL)\(secondAmount1st) -> (CLP)\(firstAmount2nd)"
         self.isInverted = isInverted
     }
