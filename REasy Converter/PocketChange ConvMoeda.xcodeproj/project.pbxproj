@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		642C33662A393688005E210C /* FlagsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642C33652A393686005E210C /* FlagsService.swift */; };
+		642C33692A394071005E210C /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642C33682A394071005E210C /* FlagView.swift */; };
 		6439764029BEA6730031C260 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6439763F29BEA6730031C260 /* AppDelegate.swift */; };
 		6439764229BEA6730031C260 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6439764129BEA6730031C260 /* SceneDelegate.swift */; };
 		6439764929BEA6770031C260 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6439764829BEA6770031C260 /* Assets.xcassets */; };
@@ -56,6 +58,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		642C33652A393686005E210C /* FlagsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagsService.swift; sourceTree = "<group>"; };
+		642C33682A394071005E210C /* FlagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
+		642C336A2A394591005E210C /* NetworkTasks */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NetworkTasks; path = ../../NetworkTasks; sourceTree = "<group>"; };
 		6439763C29BEA6730031C260 /* PocketChange ConvMoeda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PocketChange ConvMoeda.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6439763F29BEA6730031C260 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6439764129BEA6730031C260 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -116,9 +121,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		642C33672A39405F005E210C /* Flag */ = {
+			isa = PBXGroup;
+			children = (
+				642C33682A394071005E210C /* FlagView.swift */,
+			);
+			path = Flag;
+			sourceTree = "<group>";
+		};
 		6439763329BEA6730031C260 = {
 			isa = PBXGroup;
 			children = (
+				642C336A2A394591005E210C /* NetworkTasks */,
 				6439763E29BEA6730031C260 /* REasy Converter */,
 				6439765529BEA6780031C260 /* REasy ConverterTests */,
 				6439765F29BEA6780031C260 /* REasy ConverterUITests */,
@@ -171,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				647D199929F7675900AA85BE /* MainService.swift */,
+				642C33652A393686005E210C /* FlagsService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -262,6 +277,7 @@
 		64ECBBB729C6ADFA000644EF /* Converter */ = {
 			isa = PBXGroup;
 			children = (
+				642C33672A39405F005E210C /* Flag */,
 				64AD24E629BEC58F00A19708 /* ConverterViewController.swift */,
 				64AD24EE29BEC6E700A19708 /* ConverterView.swift */,
 				64AD24F229BED5C600A19708 /* ConverterViewModel.swift */,
@@ -441,6 +457,8 @@
 				64DFDABB29C2B2C600676891 /* CurrencyTextField.swift in Sources */,
 				64AD24E729BEC58F00A19708 /* ConverterViewController.swift in Sources */,
 				64ECBBBE29C6B405000644EF /* SettingsViewModel.swift in Sources */,
+				642C33692A394071005E210C /* FlagView.swift in Sources */,
+				642C33662A393688005E210C /* FlagsService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
