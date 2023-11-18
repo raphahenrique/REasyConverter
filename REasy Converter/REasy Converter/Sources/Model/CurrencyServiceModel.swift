@@ -1,5 +1,5 @@
 //
-//  Currency.swift
+//  CurrencyServiceModel.swift
 //  PocketChange ConvMoeda
 //
 //  Created by Raphael on 24/04/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Currency: Decodable {
+struct CurrencyServiceModel: Decodable {
     let id: Int
     let name: String
     let shortName: String

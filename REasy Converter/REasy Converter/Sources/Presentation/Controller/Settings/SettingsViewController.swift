@@ -73,16 +73,16 @@ extension SettingsViewController: SettingsViewDelegate {
     }
     
     func didPressSync() {
-        let service = MainService()
-        service.fetchCurrencies { result in
-            switch result {
-            case .success(let currencies):
-                print(">>>>>>")
-                print(currencies)
-            case .failure(let erro):
-                print(erro)
-            }
-        }
+//        let service = MainService()
+//        service.fetchCurrencies { result in
+//            switch result {
+//            case .success(let currencies):
+//                print(">>>>>>")
+//                print(currencies)
+//            case .failure(let erro):
+//                print(erro)
+//            }
+//        }
     }
 
 }

@@ -78,14 +78,14 @@ class CurrencyTextField: UITextField {
         }
         
         if self.roundingPlaces > 0 {
-            //USD
+            
             let amount = Double(cleanedAmount) ?? 0.0
             amountAsDouble = (amount / 100.0)
             let amountAsString = numberFormatter.string(from: NSNumber(value: amountAsDouble ?? 0.0)) ?? ""
             
             self.text = amountAsString
         } else {
-            //JPY
+            
             let amountAsNumber = Double(cleanedAmount) ?? 0.0
             amountAsDouble = amountAsNumber
             self.text = numberFormatter.string(from: NSNumber(value: amountAsNumber)) ?? ""

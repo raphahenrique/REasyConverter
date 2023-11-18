@@ -8,50 +8,52 @@
 import Foundation
 
 protocol ConverterViewModelProtocol {
+    var exchangeRate: ExchangeRate { get }
     var hint: String { get }
-    var rate: Double { get set }
     var firstSelectedCurrency: CurrencyTF? { get set }
     var secondSelectedCurrency: CurrencyTF? { get set }
     mutating func setFirstToSecondValues(value: Double)
     mutating func setSecondToFirstValues(value: Double)
-    var isInverted: Bool { get }
 }
 
 struct ConverterViewModel: ConverterViewModelProtocol {
     
+    var exchangeRate: ExchangeRate
     var hint: String
-    var rate: Double
     var firstSelectedCurrency: CurrencyTF?
     var secondSelectedCurrency: CurrencyTF?
-    var isInverted: Bool
     
-    init(rate: Double = 0.00639, isInverted: Bool = false) {
-        let newRate = isInverted ? (1/rate) : rate
-        if newRate == 0 {
-            self.rate = isInverted ? (1/0.00639) : 0.00639
-        } else {
-            self.rate = newRate
-        }
-        let initialTopAmount = Double(1000.0)
-        let initialSecondAmount = initialTopAmount * self.rate
+    init(exchangeRate: ExchangeRate) {
+        self.exchangeRate = exchangeRate
+        let initialTopAmount = Float(1000.0)
+        let initialSecondAmount = initialTopAmount * exchangeRate.rate
         
-        let secondAmount1st = Double(1.0)
-        let firstAmount2nd = String(format: "%.2f", secondAmount1st / self.rate)
+        let secondAmount1st = Float(1.0)
+        let firstAmount2nd = String(format: "%.2f", secondAmount1st / exchangeRate.rate)
 
-        self.firstSelectedCurrency = CurrencyTF(locale: "es_CL", amount: initialTopAmount)
-        self.secondSelectedCurrency = CurrencyTF(locale: "pt_BR", amount: initialSecondAmount)
-        self.hint = "taxa utilizada: (CLP)\(initialTopAmount) -> (BRL)\(initialSecondAmount)\nou: (BRL)\(secondAmount1st) -> (CLP)\(firstAmount2nd)"
-        self.isInverted = isInverted
+        let fromCountry = Country(rawValue: exchangeRate.fromCurrency?.name ?? String()) ?? .brazil
+        let toCountry = Country(rawValue: exchangeRate.toCurrency?.name ?? String()) ?? .brazil
+        
+        self.firstSelectedCurrency = CurrencyTF(
+            locale: fromCountry.locale,
+            amount: Double(initialTopAmount)
+        )
+        self.secondSelectedCurrency = CurrencyTF(
+            locale: toCountry.locale,
+            amount: Double(initialSecondAmount)
+        )
+        self.hint = "taxa utilizada: (\(fromCountry.currencyCode))\(initialTopAmount) -> (\(toCountry.currencyCode))\(initialSecondAmount)\nou: (\(toCountry.currencyCode))\(secondAmount1st) -> (\(fromCountry.currencyCode))\(firstAmount2nd)"
+
     }
     
     mutating func setFirstToSecondValues(value: Double) {
         firstSelectedCurrency?.amount = value
-        secondSelectedCurrency?.amount = value * rate
+        secondSelectedCurrency?.amount = value * Double(exchangeRate.rate)
     }
 
     mutating func setSecondToFirstValues(value: Double) {
         secondSelectedCurrency?.amount = value
-        firstSelectedCurrency?.amount = value * (1/rate)
+        firstSelectedCurrency?.amount = value * (1/Double(exchangeRate.rate))
     }
 
 }

@@ -9,7 +9,7 @@ import NetworkTasks
 import UIKit
 
 protocol MainServiceProtocol {
-    func fetchCurrencies(completion: @escaping (Result<[Currency]>) -> Void)
+    func fetchCurrencies(completion: @escaping (Result<[CurrencyServiceModel]>) -> Void)
 //    func fetchExchangeRates(forUser userId: Int, completion: @escaping ([ExchangeRate]?, Error?) -> Void)
 //    func updateExchangeRate(_ exchangeRate: ExchangeRate, forUser userId: Int, completion: @escaping (Error?) -> Void)
 }
@@ -39,7 +39,7 @@ class MainService: MainServiceProtocol {
         self.baseURL = "https://reasyconverter-default-rtdb.firebaseio.com"
     }
     
-    func fetchCurrencies(completion: @escaping (Result<[Currency]>) -> Void) {
+    func fetchCurrencies(completion: @escaping (Result<[CurrencyServiceModel]>) -> Void) {
     // https://reasyconverter-default-rtdb.firebaseio.com/currenciesV2
         let url = baseURL.appending("/currenciesV2.json")
         
@@ -51,7 +51,7 @@ class MainService: MainServiceProtocol {
             case .success(let data):
                 print(data)
                 print("NUMBER OF CURRENCIES AVAILABLE TO DOWNLOAD: \(data.amount)")
-                self.fetchListOfCurrencies(amount: data.amount) { (result: Result<[Currency]>) in
+                self.fetchListOfCurrencies(amount: data.amount) { (result: Result<[CurrencyServiceModel]>) in
                     switch result {
                     case .success(let currencies):
                         completion(.success(currencies))
@@ -67,17 +67,17 @@ class MainService: MainServiceProtocol {
         
     }
     
-    private func fetchListOfCurrencies(amount: Int, completion: @escaping (Result<[Currency]>) -> Void) {
+    private func fetchListOfCurrencies(amount: Int, completion: @escaping (Result<[CurrencyServiceModel]>) -> Void) {
         let url = baseURL.appending("/currencies/")
         let json = ".json"
-        var currencies = [Currency]()
+        var currencies = [CurrencyServiceModel]()
         
         (0...amount-1).forEach { [weak self] index in
             print(index)
             let url = url.appending(String(index)).appending(json)
             let request = PCRequest1(endpoint: url, method: .get)
 
-            self?.network.send(request) { (result: Result<Currency>) in
+            self?.network.send(request) { (result: Result<CurrencyServiceModel>) in
                 switch result {
                 case .success(let data):
                     print(data)

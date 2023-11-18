@@ -50,11 +50,48 @@ class ConverterViewController: UIViewController {
         view = theView
     }
 
+    // MARK: Private Functions
+
     private func loadData() {
-        let rate = UserDefaults.standard.double(forKey: "RATE")
-        let inverted = UserDefaults.standard.bool(forKey: "INVERT_RATE")
-        viewModel = ConverterViewModel(rate: rate, isInverted: inverted)
+//        let rate = UserDefaults.standard.double(forKey: "RATE")
+//        let inverted = UserDefaults.standard.bool(forKey: "INVERT_RATE")
+    
+        if isFirstAppLaunch() {
+            createCurrencyPairs()
+            setAppLaunched()
+            
+            // ********* APAGAR QUANDO OK
+            UserDefaults.standard.set(true, forKey: "HasLaunchedBefore")
+        }
+        
+        
+        if let chile = CurrencyService.fetchCurrency(forCountry: .chile),
+           let brazil = CurrencyService.fetchCurrency(forCountry: .brazil),
+           let initialPair = CurrencyService.fetchExchangeRate(
+            fromCurrency: chile,
+            toCurrency: brazil
+           ) {
+            viewModel = ConverterViewModel(exchangeRate: initialPair)
+        }
+                
     }
+    
+    private func isFirstAppLaunch() -> Bool {
+        let key = "HasLaunchedBefore"
+        let hasLaunchedBefore = UserDefaults.standard.bool(forKey: key)
+        return !hasLaunchedBefore
+    }
+
+    private func setAppLaunched() {
+        let key = "HasLaunchedBefore"
+        UserDefaults.standard.set(true, forKey: key)
+    }
+    
+    private func createCurrencyPairs() {
+        CurrencyService.deleteAllData()
+        CurrencyService.createDefaultCurrenciesAndRates()
+    }
+
 }
 
 extension ConverterViewController: ConverterViewDelegate {

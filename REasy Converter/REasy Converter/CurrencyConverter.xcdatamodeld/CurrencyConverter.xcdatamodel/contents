@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Currency" representedClassName=".Currency" syncable="YES">
+        <attribute name="flagURL" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" spotlightIndexingEnabled="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ExchangeRate" representedClassName=".ExchangeRate" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="rate" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="fromCurrency" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Currency"/>
+        <relationship name="toCurrency" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Currency"/>
+    </entity>
+</model>
